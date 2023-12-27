@@ -1,0 +1,60 @@
+{
+  "pages": [
+    //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+    // {
+    //   "path": "pages/index/index",
+    //   "style": {
+    //     "navigationBarTitleText": "uni-app"
+    //   }
+    // },
+    {
+      "path": "pages/material/index",
+      "style": {
+        "navigationBarTitleText": "素材中心"
+      }
+    },
+    {
+      "path": "pages/tool/index",
+      "style": {
+        "navigationBarTitleText": "小工具"
+      }
+    },
+    {
+      "path": "pages/user/index",
+      "style": {
+        "navigationBarTitleText": "个人中心"
+      }
+    }
+  ],
+  "tabBar": {
+    "color": "#ffffff",
+    "selectedColor": "#FF7465",
+    "iconWidth": "40px",
+    "list": [
+      {
+        "pagePath": "pages/material/index",
+        "iconPath": "/static/logo/home.png",
+        "selectedIconPath": "/static/logo/home-fill.png",
+        "text": "素材中心"
+      },
+      {
+        "pagePath": "pages/tool/index",
+        "iconPath": "/static/logo/menu.png",
+        "selectedIconPath": "/static/logo/menu-fill.png",
+        "text": "小工具"
+      },
+      {
+        "pagePath": "pages/user/index",
+        "iconPath": "/static/logo/user.png",
+        "selectedIconPath": "/static/logo/user-fill.png",
+        "text": "个人中心"
+      }
+    ]
+  },
+  "globalStyle": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "素材库",
+    "navigationBarBackgroundColor": "#FF7465",
+    "backgroundColor": "#ffffff"
+  }
+}
