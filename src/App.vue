@@ -1,28 +1,13 @@
 <script setup lang="ts">
+import { getBaseInfo } from "@/api/user";
+import useUserStore from '@/stores/user';
 import { onLaunch, onShow, onHide } from "@dcloudio/uni-app";
+
+const userStore = useUserStore();
+
 onLaunch(() => {
   console.log("App Launch");
-      uni.login({
-        provider: 'weixin', //使用微信登录
-        success: function (loginRes) {
-          console.log("wx login", loginRes.authResult);
-        },
-      });
-  // uni.getSetting({
-  //   success(res) {
-  //     console.log("setting", res.authSetting);
-  //   },
-  // });
-  // uni.authorize({
-  //   scope: "scope.userProfile",
-  //   success: () => {
-  //     uni.getUserProfile({
-  //       success: (userInfo) => {
-  //         console.log("info ", userInfo);
-  //       },
-  //     });
-  //   },
-  // });
+  login();
 });
 onShow(() => {
   console.log('App Show');
@@ -31,15 +16,13 @@ onHide(() => {
   console.log("App Hide");
 });
 
-
 function login() {
   // 调用微信登录接口
   uni.login({
     provider: "weixin",
     onlyAuthorize: true,
     success: function (loginRes) {
-      console.log("登录成功：", loginRes);
-
+      // console.log("登录成功：", loginRes);
       // 获取到用户登录凭证（code）
       const code = loginRes.code;
       if (code) {
@@ -53,19 +36,32 @@ function login() {
             grant_type: "authorization_code",
           },
           success: (cts) => {
-            // 换取成功后 暂存这些数据 留作后续操作
-            openid.value = cts.data.openid; //openid 用户唯一标识
-            unionid.value = cts.data.unionid; //unionid 开放平台唯一标识
-            session_key.value = cts.data.session_key; //session_key  会话密钥
-            // getUserInfo();
-            signup();
+            //openid 用户唯一标识
+            //unionid 开放平台唯一标识
+            getBase(cts.data.openid, cts.data.unionid);
           },
         });
       } else {
-
         console.log('登录失败！' + loginRes.errMsg);
       }
     },
+  });
+}
+
+async function getBase(openId: string, unionId: string) {
+  if (!openId && !unionId) {
+    return;
+  }
+  const user = await getBaseInfo({ openId, unionId });
+  console.log('user ', user);
+  userStore.setUser({
+    openid: openId,
+    unionid: unionId,
+    name:  user.yhnc || '',
+    avatar: user.imgurl || '',
+    type: user.yhlx || 0,
+    memberDate: user.hydqr || '',
+    freeUpload: user.mfcs || 0
   });
 }
 </script>

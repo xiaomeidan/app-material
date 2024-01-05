@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { saveUser } from "@/api/user";
+import { getBaseInfo } from "@/api/user";
 
 const openid = ref("");
 const unionid = ref("");
@@ -28,7 +28,7 @@ async function signup() {
   if (!openid.value && !unionid.value) {
     return;
   }
-  await saveUser({ openId: openid.value, unionId: unionid.value });
+  await getBaseInfo({ openId: openid.value, unionId: unionid.value });
 }
 
 function login() {

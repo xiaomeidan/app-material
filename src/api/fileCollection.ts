@@ -5,5 +5,9 @@ export function getCollection(params: {
   pageIndex: number;
   pageSize: number;
 }) {
-  return sendQuest("POST", "mcs/fileCollection/queryConllectionList", params);
+  return sendQuest({ 
+    method: 'post',
+    url: 'mcs/fileCollection/queryConllectionList',
+    data: params
+  });
 }

@@ -1,49 +1,26 @@
 import { defineStore } from "pinia";
-import img9 from "@/static/good/thunder.png";
-import img10 from "@/static/good/wind.png";
+import { ref } from 'vue';
 import type { User } from "@/types/user";
 
 const userStore = defineStore("user", () => {
-  const cart = ref<User>({
-    openid: '',
-    unionid: '',
+  const user = ref<User>({
+    openId: '',
+    unionId: '',
     name: '',
     avatar: '',
-    type: 0
+    type: 0,
+    memberDate: '',
+    freeUpload: 0
   });
 
-  function addToCart(good: Good) {
-    const isExist = cart.value.find(({ id }) => id === good.id);
-    setGoodNumber(good, isExist ? isExist.count + 1 : 1);
-  }
-
-  function rmFromCart(good: Good) {
-    const isExist = cart.value.find(({ id }) => id === good.id);
-    if (isExist) {
-      setGoodNumber(good, good.count - 1);
-    }
-  }
-
-  function setGoodNumber(good: Good, count: number) {
-    if (count <= 0) {
-      cart.value = cart.value.filter(({ id }) => id !== good.id);
-      return;
-    }
-
-    const isExist = cart.value.find(({ id }) => id === good.id);
-    if (isExist) {
-      isExist.count = count;
-      return;
-    }
-    cart.value = [{ ...good, count }, ...cart.value];
+  function setUser(u: Partial<User>) {
+    user.value = { ...user.value, ...u };
   }
 
   return {
-    cart,
-    addToCart,
-    rmFromCart,
-    setGoodNumber,
+    user,
+    setUser
   };
 });
 
-export default cartStore;
+export default userStore;
